@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Quiz Test</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .quiz-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-box">
+  <h2>Simple Test</h2>
+
+  <form id="quizForm">
+
+    <p>1. Capital of France?</p>
+    <input type="radio" name="q1" value="a"> London<br>
+    <input type="radio" name="q1" value="b"> Paris<br>
+    <input type="radio" name="q1" value="c"> Rome<br>
+
+    <p>2. 5 + 3 = ?</p>
+    <input type="radio" name="q2" value="a"> 6<br>
+    <input type="radio" name="q2" value="b"> 8<br>
+    <input type="radio" name="q2" value="c"> 10<br>
+
+    <p>3. Past of "go"?</p>
+    <input type="radio" name="q3" value="a"> goed<br>
+    <input type="radio" name="q3" value="b"> went<br>
+    <input type="radio" name="q3" value="c"> gone<br>
+
+    <p>4. Sun rises in the?</p>
+    <input type="radio" name="q4" value="a"> West<br>
+    <input type="radio" name="q4" value="b"> East<br>
+    <input type="radio" name="q4" value="c"> North<br>
+
+    <p>5. Water freezes at?</p>
+    <input type="radio" name="q5" value="a"> 0°C<br>
+    <input type="radio" name="q5" value="b"> 50°C<br>
+    <input type="radio" name="q5" value="c"> 100°C<br>
+
+    <button type="button" onclick="checkAnswers()">Submit</button>
+  </form>
+
+  <h3 id="result"></h3>
+</div>
+
+<script>
+function checkAnswers() {
+  let score = 0;
+
+  const answers = {
+    q1: "b",
+    q2: "b",
+    q3: "b",
+    q4: "b",
+    q5: "a"
+  };
+
+  for (let q in answers) {
+    let selected = document.querySelector(`input[name="${q}"]:checked`);
+    if (selected && selected.value === answers[q]) {
+      score++;
+    }
+  }
+
+  document.getElementById("result").innerHTML =
+    "Your score: " + score + "/5";
+}
+</script>
+
+</body>
+</html>
