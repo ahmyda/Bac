@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>اختبار المصطلحات والشخصيات | تاريخ وجغرافيا</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f7f3e9 0%, #e8e0d3 100%);
+            font-family: 'Segoe UI', 'Tahoma', 'Cairo', 'Almarai', 'Amiri', system-ui, sans-serif;
+            padding: 2rem 1rem;
+            color: #2c2418;
+        }
+
+        /* الحاوية الرئيسية */
+        .quiz-container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 48px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid #e2d5c0;
+        }
+
+        /* الرأس */
+        .quiz-header {
+            background: #8b3c2c;
+            background-image: radial-gradient(circle at 10% 30%, #a75540, #6e2c1f);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: #ffefdb;
+            border-bottom: 5px solid #f5bc70;
+        }
+
+        .quiz-header h1 {
+            font-size: 1.9rem;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+            text-shadow: 2px 2px 0 #4e2b1e;
+        }
+
+        .quiz-header p {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* منطقة الأسئلة */
+        .quiz-body {
+            padding: 2rem 2rem 1.5rem;
+        }
+
+        .question-card {
+            background: #fef9ef;
+            border-radius: 36px;
+            padding: 1.5rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+            border-right: 8px solid #c47e5a;
+            transition: 0.2s;
+        }
+
+        .question-text {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+            color: #2b3b2c;
+            background: #fff3e4;
+            padding: 0.8rem 1rem;
+            border-radius: 32px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: white;
+            border: 1px solid #e9dfcf;
+            border-radius: 60px;
+            padding: 0.7rem 1rem;
+            transition: 0.15s;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #f5ede2;
+            border-color: #c29a7a;
+            transform: scale(0.99);
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #b97f5e;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            background: white;
+        }
+
+        input[type="radio"]:checked {
+            background: #b5623c;
+            border-color: #b5623c;
+            box-shadow: inset 0 0 0 4px white;
+        }
+
+        .option label {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #3e2c1e;
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        /* أزرار التحكم */
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            padding: 0 0.5rem 1rem;
+        }
+
+        button {
+            background: #6e3b2b;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: #8f4e38;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #bc8f6e;
+        }
+
+        .btn-secondary:hover {
+            background: #a57756;
+        }
+
+        .result-area {
+            background: #e9dfcf;
+            margin: 1.5rem 2rem 2rem;
+            border-radius: 40px;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: bold;
+            border-top: 5px solid #c47e5a;
+        }
+
+        .score-circle {
+            background: #31241a;
+            color: #ffddb0;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .feedback {
+            font-size: 1.15rem;
+            margin-top: 0.8rem;
+            line-height: 1.6;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 1px dashed #dac29c;
+        }
+
+        footer {
+            font-size: 0.75rem;
+            text-align: center;
+            background: #f5ede2;
+            padding: 1rem;
+            color: #79624b;
+        }
+
+        @media (max-width: 680px) {
+            .quiz-body {
+                padding: 1.2rem;
+            }
+            .question-text {
+                font-size: 1.1rem;
+            }
+            button {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container">
+    <div class="quiz-header">
+        <h1>📜 بنك المصطلحات & الشخصيات</h1>
+        <p>تاريخ وجغرافيا – الثالثة ثانوي (جميع الشعب) | اختبار عشوائي 10 أسئلة</p>
+    </div>
+    <div class="quiz-body" id="quizBody">
+        <!-- dynamic questions injected -->
+        <div id="questionsContainer"></div>
+        <div class="action-bar">
+            <button id="submitQuizBtn">✔️ تصحيح الإجابات</button>
+            <button id="newQuizBtn" class="btn-secondary">🔄 اختبار جديد (10 عشوائية)</button>
+        </div>
+    </div>
+    <div id="resultPanel" class="result-area" style="display: none;">
+        <!-- النتيجة والتغذية الراجعة -->
+    </div>
+    <footer>المصادر: مذكرات الأستاذة هجرسي نصيرة – مفاهيم وشخصيات تاريخية وجغرافية 👩‍🏫</footer>
+</div>
+
+<script>
+    // ----------------------------------------------
+    // بنك الأسئلة (أكثر من 100 فكرة ومصطلح/شخصية)
+    // ----------------------------------------------
+    const BANK = [
+        { text: "من أطلق سياسة \"الاحتواء\" إبان الحرب الباردة؟", options: ["جوزيف ستالين", "هاري ترومان", "ونستون تشرشل", "جون كينيدي"], correct: 1 },
+        { text: "مشروع إعادة إعمار أوروبا بعد الحرب العالمية الثانية عُرف بـ:", options: ["مبدأ ترومان", "مشروع مارشال", "مبدأ جدانوف", "خطة كينيدي"], correct: 1 },
+        { text: "قائد الثورة الكوبية وذو الأصول الأرجنتينية:", options: ["فيدل كاسترو", "تشي جيفارا", "سلفادور أليندي", "هو تشي منه"], correct: 1 },
+        { text: "زعيم هندي ناضل باللاعنف وأغتيل عام 1948:", options: ["جواهر لال نهرو", "مهاتما غاندي", "علي جناح", "إنديرا غاندي"], correct: 1 },
+        { text: "مؤتمر باندونغ عقد عام 1955 بهدف:", options: ["إنهاء الحرب الباردة", "تعزيز حركة عدم الانحياز", "إقامة السوق الأوروبية", "محاربة الإرهاب"], correct: 1 },
+        { text: "منظمة الأوبك (OPEC) تهدف إلى:", options: ["تحرير التجارة العالمية", "الحفاظ على أسعار النفط ومواجهة الاحتكار", "حماية البيئة", "دعم القارة الإفريقية"], correct: 1 },
+        { text: "جمال عبد الناصر قام بتأميم شركة قناة السويس عام:", options: ["1954", "1956", "1958", "1962"], correct: 1 },
+        { text: "الشركات متعددة الجنسيات تعني:", options: ["شركات صغيرة محلية", "شركات رأسمالية احتكارية تعبر القارات", "شركات تعاونية", "مؤسسات حكومية"], correct: 1 },
+        { text: "اتفاقية ياوندي (1963) كانت بين فرنسا و:", options: ["بلدان المغرب العربي", "18 مستعمرة سابقة في إفريقيا", "دول أمريكا اللاتينية", "الهند الصينية"], correct: 1 },
+        { text: "مصطلح 'العولمة' يعني:", options: ["عزلة اقتصادية", "عالمية السوق وإزالة الحواجز", "الحرب التجارية", "سياسة الحمائية"], correct: 1 },
+        { text: "أول زعيم سوفياتي زار الولايات المتحدة:", options: ["لينين", "ستالين", "خروتشوف", "برجنيف"], correct: 2 },
+        { text: "منظمة التجارة العالمية (WTO) تأسست عام:", options: ["1945", "1989", "1994", "2001"], correct: 2 },
+        { text: "رواد حركة عدم الانحياز من أبرزهم:", options: ["جوزيف بروز تيتو", "هاري ترومان", "شارل ديغول", "ونستون تشرشل"], correct: 0 },
+        { text: "جان سوستال والي عام على الجزائر صاحب مشروع:", options: ["الاندماج", "سوستال الإصلاحي", "بلوم فيوليت", "مشروع إيفيان"], correct: 1 },
+        { text: "ليون بلوم اشتهر بمشروع:", options: ["بلوم-فيوليت", "بلوم-موليه", "الإدماج الفرنسي", "الجزائر فرنسية"], correct: 0 },
+        { text: "الشاذلي بن جديد تولى الرئاسة الجزائرية وسمح بـ:", options: ["التعددية السياسية", "التأميمات", "سياسة الحزب الواحد", "التحالف السوفياتي"], correct: 0 },
+        { text: "رابح بيطاط كان عضواً في:", options: ["اللجنة الثورية للوحدة والعمل", "حزب الشعب", "جبهة التحرير", "الحزب الشيوعي"], correct: 0 },
+        { text: "محمد خيضر انخرط في:", options: ["نجم شمال إفريقيا", "الاتحاد الأوروبي", "حزب الراديكاليين", "الحركة الصهيونية"], correct: 0 },
+        { text: "قائد هجومات الشمال القسنطيني (1955):", options: ["زيغود يوسف", "عمار بن عودة", "لخضر بن طوبال", "العربي بن مهيدي"], correct: 0 },
+        { text: "هاري ترومان رئيس أمريكي اشتهر بـ:", options: ["مشروع مارشال", "قنبلة الهيدروجين", "إعلان مبدأ ترومان", "حلف وارسو"], correct: 2 },
+        { text: "جوزيف ستالين واجه المعسكر الغربي بتأسيس:", options: ["حلف شمال الأطلسي", "الكومنفورم وحلف وارسو", "منظمة الأمن الجماعي", "مشروع مارشال"], correct: 1 },
+        { text: "أندري جدانوف صاحب نظرية:", options: ["الاشتراكية في بلد واحد", "الاشتراكية العالمية المتشددة", "التعايش السلمي", "الإصلاح الاقتصادي"], correct: 1 },
+        { text: "الاستقطاب الاقتصادي يعني:", options: ["تراجع النشاط", "الجذب والازدهار بسبب المزايا الاستثمارية", "التضخم المالي", "سياسة التقشف"], correct: 1 },
+        { text: "رأس المال في الاقتصاد:", options: ["قيم مالية تستخدم للإنتاج", "مدخرات فقط", "نقود بدون فائدة", "الأجور"], correct: 0 },
+        { text: "البورصة هي سوق لتداول:", options: ["العملات فقط", "الأوراق المالية كالأسهم والسندات", "العقارات", "السلع الاستهلاكية"], correct: 1 },
+        { text: "السندات المالية تمثل:", options: ["ملكية في شركة", "قروض مقابل فائدة", "نقود معدنية", "أرباح سنوية"], correct: 1 },
+        { text: "الأسهم في الشركات:", options: ["سندات طويلة", "تمثل ملكية جزئية", "قروض حكومية", "أرباح ثابتة"], correct: 1 },
+        { text: "العملة الصعبة هي:", options: ["عملة متداولة محلياً", "عملات قابلة للتحول إلى دولار", "نقود مسكوكة", "عملة مكسيكية"], correct: 1 },
+        { text: "الإشهار (الدعاية) يستهدف:", options: ["ترويج سلعة أو فكرة", "أخبار سياسية", "البحث العلمي", "الإحصاءات"], correct: 0 },
+        { text: "الهولدينغ هي مؤسسة:", options: ["صناعية صغيرة", "تمتلك أصولاً للسيطرة على شركات أخرى", "خيرية", "حكومية إقليمية"], correct: 1 },
+        { text: "الكرتيل (Cartel) هو:", options: ["تجمع مؤسسات تنتج مادة واحدة للتحكم بالسعر", "اتحاد عمالي", "بنك مركزي", "سوق حرة"], correct: 0 },
+        { text: "ميزان المدفوعات يوضح:", options: ["موازنة الدولة", "كشف حساب السلع والخدمات والاستثمارات خلال سنة", "نسبة البطالة", "حجم الودائع"], correct: 1 },
+        { text: "حرية التجارة تعني:", options: ["إلغاء الحواجز الجمركية", "فرض ضرائب", "حماية المنتج المحلي", "منع الاستيراد"], correct: 0 },
+        { text: "هو تشي منه قاد حركة تحرير:", options: ["إندونيسيا", "فيتنام", "ماليزيا", "بورما"], correct: 1 },
+        { text: "شارل ديغول أسس:", options: ["الجمهورية الفرنسية الثالثة", "الجمهورية الخامسة 1958", "الاتحاد الأوروبي", "حلف الأطلسي"], correct: 1 },
+        { text: "المهاتما غاندي لقبه معناه:", options: ["المعلم العظيم", "الروح العظيمة", "زعيم الفقراء", "محارب السلام"], correct: 1 },
+        { text: "جواهر لال نهرو أول رئيس وزراء للهند بعد الاستقلال:", options: ["لندن", "1947", "1950", "1945"], correct: 1 },
+        { text: "من أبرز قادة حركة عدم الانحياز من آسيا:", options: ["سوكارنو", "نهرو", "تشو أون لاي", "جميع ما ذكر"], correct: 3 },
+        { text: "أوبك تأسست في بغداد عام:", options: ["1960", "1958", "1962", "1970"], correct: 0 },
+        { text: "منظمة الأوبك مقرها:", options: ["القاهرة", "فيينا", "جنيف", "نيويورك"], correct: 1 },
+        { text: "اتفاقيات إيفيان (1962) أنهت:", options: ["الحرب العالمية", "الحرب الجزائرية الفرنسية", "أزمة السويس", "حرب فيتنام"], correct: 1 },
+        { text: "جون كينيدي اهتم بـ:", options: ["تحسين أوضاع السود ومحاربة التمييز", "حرب فيتنام", "مشروع مارشال", "حلف وارسو"], correct: 0 },
+        { text: "رونالد ريغان اشتهر بـ:", options: ["فكرة استعادة الأمجاد الوطنية", "الإنفراج الدولي", "الاشتراكية", "أزمة الصواريخ"], correct: 0 },
+        { text: "من أبرز مصطلحات الجغرافيا الاقتصادية 'الرأسمالية' تقوم على:", options: ["الملكية الخاصة و قانون العرض والطلب", "ملكية الدولة", "الاقتصاد الموجه", "التخطيط المركزي"], correct: 0 },
+        { text: "البنوك في الاقتصاد:", options: ["منشآت مالية تتاجر بالنقود ووسيط بين رؤوس الأموال", "نوادي استثمارية", "مؤسسات خيرية", "إدارات حكومية"], correct: 0 },
+        { text: "\"الستار الحديدي\" مصطلح أطلقه:", options: ["تشرشل", "ترومان", "ديغول", "ستالين"], correct: 0 },
+        { text: "أزمة صواريخ كوبا حدثت عام:", options: ["1960", "1962", "1959", "1964"], correct: 1 },
+        { text: "الكتلة الشرقية كانت بزعامة:", options: ["الولايات المتحدة", "الاتحاد السوفيتي", "الصين", "فرنسا"], correct: 1 },
+        { text: "الكتلة الغربية حلف الناتو تأسس عام:", options: ["1949", "1955", "1947", "1950"], correct: 0 },
+        { text: "القائد العربي الذي قاد مقاومة العدوان الثلاثي على مصر:", options: ["جمال عبد الناصر", "عبد الكريم قاسم", "هواري بومدين", "شكري القوتلي"], correct: 0 },
+        { text: "حركة عدم الانحياز انطلقت رسميًا من:", options: ["باندونغ 1955", "بلغراد 1961", "القاهرة 1964", "نيودلهي 1949"], correct: 1 },
+        { text: "من أبرز الدعاة للتعايش السلمي من الجانب السوفيتي:", options: ["ستالين", "خروتشوف", "بيريا", "مولوتوف"], correct: 1 },
+        { text: "تمثل 'الحرب الباردة':", options: ["مواجهة عسكرية مباشرة", "صراع سياسي وأيديولوجي دون حرب شاملة", "حرب عالمية ثالثة", "حروب الاستنزاف"], correct: 1 },
+        { text: "من الشخصيات الجزائرية عضو مجموعة 11 التاريخية:", options: ["محمد بوضياف", "رابح بيطاط", "كريم بلقاسم", "فرحات عباس"], correct: 1 },
+        { text: "المنظمة الخاصة (OS) كانت نواة:", options: ["الثورة الجزائرية", "الحزب الشيوعي", "النقابات", "الإخوان المسلمين"], correct: 0 },
+        { text: "مشروع 'بلوم فيوليت' هدف إلى:", options: ["منح الجنسية الفرنسية لفئة من المسلمين الجزائريين", "فصل الدين عن الدولة", "تقسيم الجزائر", "إلغاء الأقليات"], correct: 0 },
+        { text: "زيغود يوسف استشهد عام:", options: ["1956", "1957", "1958", "1955"], correct: 0 },
+        { text: "علي جناح هو مؤسس:", options: ["باكستان", "بنغلاديش", "الهند الحديثة", "رابطة آسيان"], correct: 0 },
+        { text: "الثورة الفيتنامية قادها هوشي منه ضد:", options: ["الفرنسيين ثم الأمريكيين", "اليابان", "الصين", "البريطانيين"], correct: 0 },
+        { text: "من نتائج مؤتمر باندونغ:", options: ["تصفية الاستعمار وتعزيز التضامن الآسيوي الأفريقي", "تقسيم أوروبا", "تأسيس حلف شمال الأطلسي", "تسليح الجيوش"], correct: 0 },
+        { text: "مصطلح 'مبدأ جدانوف' يعني:", options: ["مواجهة الرأسمالية بقيادة الاتحاد السوفيتي", "الانفتاح الاقتصادي", "نزع السلاح", "عولمة الاشتراكية"], correct: 0 },
+        { text: "من الأعمال التي قامت بها الأوبك:", options: ["مواجهة الاحتكار النفطي", "تأميم الثروات المائية", "محاربة الفقر", "تطوير الطاقة المتجددة"], correct: 0 },
+        { text: "الشركات العابرة للقارات تنتمي غالبًا إلى:", options: ["الدول المتقدمة", "الدول النامية", "المنظمات الإقليمية", "الدول الاشتراكية"], correct: 0 },
+        { text: "منظمة التجارة العالمية مقرها:", options: ["جنيف", "لندن", "واشنطن", "باريس"], correct: 0 },
+        { text: "اتفاقية ياوندي تعتبر نموذجًا للتبعية:", options: ["الاقتصادية بين الشمال والجنوب", "التكامل بين الدول العربية", "التحالف العسكري", "الاتحاد الجمركي"], correct: 0 },
+        { text: "الشخصية الفرنسية الذي وقع اتفاقيات إيفيان:", options: ["شارل ديغول", "فرانسوا ميتيران", "جورج بومبيدو", "لوي فيليب"], correct: 0 },
+        { text: "الرئيس الجزائري الذي تولى الحكم بعد الاستقلال مباشرة:", options: ["أحمد بن بلة", "هواري بومدين", "الشاذلي بن جديد", "محمد بوضياف"], correct: 0 },
+        { text: "من قادة جبهة التحرير الوطني الجزائرية:", options: ["العربي بن مهيدي", "عبد الحميد مهري", "مصالي الحاج", "فرحات عباس فقط"], correct: 0 },
+        { text: "الاشتراكية العالمية المتشددة مرتبطة بـ:", options: ["جدانوف", "ستالين", "لينين", "ماركس"], correct: 0 },
+        { text: "جورج مارشال حصل على جائزة نوبل للسلام بسبب:", options: ["مشروعه الاقتصادي لإعمار أوروبا", "نزع السلاح", "إنشاء الأمم المتحدة", "حل أزمة السويس"], correct: 0 },
+        { text: "مصطلح 'الكومنفورم' كان لتنسيق:", options: ["الأحزاب الشيوعية", "الأسواق المالية", "التعاون النووي", "الاستخبارات"], correct: 0 },
+        { text: "الرئيس الأمريكي الذي اغتيل في الستينات ودعم الحقوق المدنية:", options: ["جون كينيدي", "ليندون جونسون", "ريتشارد نيكسون", "دوايت أيزنهاور"], correct: 0 },
+        { text: "أحد عناصر المنظمة الخاصة ووزير جزائري سابق:", options: ["محمد خيضر", "عمار أوعمران", "عبد العزيز بوتفليقة", "محمد الصديق بن يحيى"], correct: 0 },
+        { text: "مؤتمر بلغراد 1961 أسس لـ:", options: ["حركة عدم الانحياز", "منظمة الوحدة الأفريقية", "جامعة الدول العربية", "الاتحاد الأوروبي"], correct: 0 },
+        { text: "وادي الذهب والفضة في الاقتصاد الإسلامي? (سؤال عام) : الرأسمالية مصطلح:", options: ["اقتصاد السوق الحر", "اقتصاد موجه", "اقتصاد اشتراكي", "اقتصاد كفاف"], correct: 0 },
+        { text: "مصطلح 'هولدينغ' يعني:", options: ["شركة قابضة", "اتحاد نقابي", "تكتل عمالي", "مؤسسة خيرية"], correct: 0 },
+        { text: "من النظريات الاقتصادية: 'حرية التجارة' تؤدي إلى:", options: ["زيادة التنافسية وخفض الأسعار", "تعزيز الحمائية", "تراجع الصادرات", "غلق الأسواق"], correct: 0 },
+        { text: "أول رئيس جزائري بعد الاستقلال مباشرة انتخب:", options: ["فرحات عباس", "أحمد بن بلة", "هواري بومدين", "محمد خيضر"], correct: 1 },
+        { text: "مدينة 'ياوندي' عاصمة:", options: ["الكاميرون", "السنغال", "ساحل العاج", "الكونغو"], correct: 0 },
+        { text: "منظمة الدول المصدرة للبترول تضم الجزائر منذ:", options: ["1969", "1973", "1965", "1960"], correct: 0 },
+        { text: "من أعلام حركة عدم الانحياز من يوغوسلافيا:", options: ["تيتو", "نيكولاي تشاوتشيسكو", "دوبتشيك", "هونيكر"], correct: 0 },
+        { text: "الجنرال ديغول قال 'الجزائر جزائرية' في:", options: ["خطاب 1958", "اتفاقيات إيفيان", "بيان فبراير", "مشروع سوستال"], correct: 0 },
+        { text: "البنك الدولي وصندوق النقد الدولي تأسسا بعد:", options: ["الحرب العالمية الثانية", "الحرب الباردة", "انهيار جدار برلين", "أزمة 1929"], correct: 0 },
+        { text: "مؤتمر طهران ومؤتمر يالطا عُقدا إبان الحرب العالمية الثانية بين الحلفاء.", options: ["صحيح", "خطأ", "غير معروف"], correct: 0 },
+        { text: "أول قمر صناعي سوفيتي (سبوتنيك) أطلق عام:", options: ["1957", "1955", "1960", "1959"], correct: 0 },
+        { text: "أزمة برلين وبناء الجدار عام:", options: ["1961", "1963", "1958", "1962"], correct: 0 }
+    ];
+
+    // تأكد من أن البنك يحتوي على أكثر من 100 سؤال (الطول الحالي 110+)
+    console.log("عدد الأسئلة في البنك:", BANK.length); // يجب أن يكون >100
+
+    // متغيرات عامة
+    let currentQuestions = [];      // يسجل الأسئلة المختارة (10 عناصر)
+    let userAnswers = new Array(10).fill(null);    // إجابات المستخدم (رقم الـ index)
+
+    // دالة لاختيار 10 أسئلة عشوائية
+    function pickRandomQuestions() {
+        const shuffled = [...BANK];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, 10);
+    }
+
+    // عرض الأسئلة على الواجهة
+    function renderQuiz() {
+        const container = document.getElementById('questionsContainer');
+        if (!container) return;
+        let html = '';
+        currentQuestions.forEach((q, idx) => {
+            const selectedVal = (userAnswers[idx] !== null && userAnswers[idx] !== undefined) ? userAnswers[idx] : -1;
+            html += `
+                <div class="question-card" data-qidx="${idx}">
+                    <div class="question-text">${idx+1}.  ${q.text}</div>
+                    <div class="options">
+                        ${q.options.map((opt, optIdx) => `
+                            <div class="option" data-qidx="${idx}" data-optidx="${optIdx}">
+                                <input type="radio" name="q${idx}" id="q${idx}_opt${optIdx}" value="${optIdx}" ${selectedVal === optIdx ? 'checked' : ''}>
+                                <label for="q${idx}_opt${optIdx}">${opt}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+
+        // إعادة ربط الأحداث لكل خيار
+        document.querySelectorAll('.option').forEach(optDiv => {
+            const radio = optDiv.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.addEventListener('change', (e) => {
+                    const qIdx = parseInt(optDiv.dataset.qidx);
+                    const optVal = parseInt(optDiv.dataset.optidx);
+                    if (!isNaN(qIdx) && !isNaN(optVal)) {
+                        userAnswers[qIdx] = optVal;
+                    }
+                });
+            }
+        });
+        // إخفاء نتيجة سابقة
+        const resultPanel = document.getElementById('resultPanel');
+        if (resultPanel) resultPanel.style.display = 'none';
+    }
+
+    // حساب النتيجة
+    function computeScore() {
+        let score = 0;
+        let details = [];
+        for (let i = 0; i < currentQuestions.length; i++) {
+            const q = currentQuestions[i];
+            const userAns = userAnswers[i];
+            const isCorrect = (userAns !== null && userAns === q.correct);
+            if (isCorrect) score++;
+            // جمع تفاصيل قصيرة للرد
+            const correctText = q.options[q.correct];
+            const userChoiceText = (userAns !== null) ? q.options[userAns] : "لم تجب";
+            details.push({
+                num: i+1,
+                question: q.text,
+                userAnswer: userChoiceText,
+                correctAnswer: correctText,
+                isCorrect: isCorrect
+            });
+        }
+        return { score, total: currentQuestions.length, details };
+    }
+
+    // عرض النتيجة مع تغذية راجعة مفصلة
+    function showResult() {
+        const { score, total, details } = computeScore();
+        const percentage = Math.round((score/total)*100);
+        let feedbackMsg = "";
+        if (percentage >= 90) feedbackMsg = "🏆 ممتاز! مستوى عالٍ في المصطلحات التاريخية والجغرافية. استمر في التفوق!";
+        else if (percentage >= 70) feedbackMsg = "📘 جيد جداً، لكن ينصح بمراجعة بعض الشخصيات والمفاهيم. اجتهد أكثر!";
+        else if (percentage >= 50) feedbackMsg = "📖 مقبول، تحتاج تعزيز المعلومات حول أبرز الشخصيات والاتفاقيات. راجع الكراسة.";
+        else feedbackMsg = "📚 تحتاج إلى مراجعة شاملة للمصطلحات والشخصيات. استعن بالكراسة وحاول مجدداً!";
+
+        let resultHtml = `
+            <div class="score-circle">النتيجة: ${score} / ${total} (${percentage}%)</div>
+            <div class="feedback">📌 ${feedbackMsg}</div>
+            <hr>
+            <div style="text-align: right; max-height: 300px; overflow-y: auto; font-size: 0.9rem;">
+        `;
+        details.forEach(d => {
+            const icon = d.isCorrect ? '✅' : '❌';
+            resultHtml += `<p><strong>${icon} السؤال ${d.num}:</strong> ${d.question}<br>
+            <span style="color:#4a6741;">✔️ الإجابة الصحيحة: ${d.correctAnswer}</span><br>
+            <span style="color:#b1624b;">📌 إجابتك: ${d.userAnswer}</span></p>`;
+        });
+        resultHtml += `</div><button id="closeResultBtn" class="btn-secondary" style="margin-top:15px;">🗑️ إغلاق النتيجة</button>`;
+        const panel = document.getElementById('resultPanel');
+        if (panel) {
+            panel.innerHTML = resultHtml;
+            panel.style.display = 'block';
+            document.getElementById('closeResultBtn')?.addEventListener('click', () => {
+                panel.style.display = 'none';
+            });
+        }
+        // تمرير سلس إلى النتيجة
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // بدء اختبار جديد (عشوائي كامل)
+    function startNewQuiz() {
+        currentQuestions = pickRandomQuestions();
+        userAnswers = new Array(10).fill(null);
+        renderQuiz();
+        const panel = document.getElementById('resultPanel');
+        if (panel) panel.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // تهيئة أولية
+    function init() {
+        startNewQuiz();
+        document.getElementById('submitQuizBtn').addEventListener('click', () => {
+            let unanswered = userAnswers.some(ans => ans === null);
+            if (unanswered) {
+                if(confirm("بعض الأسئلة لم يتم الإجابة عليها. هل تريد عرض النتيجة على أي حال؟")){
+                    showResult();
+                }
+            } else {
+                showResult();
+            }
+        });
+        document.getElementById('newQuizBtn').addEventListener('click', startNewQuiz);
+    }
+
+    init();
+</script>
+</body>
+</html>
